@@ -51,7 +51,7 @@ export default function Navbar({ user }) {
             <ul className="flex items-center">
               
               <li><Link to="/profile" className="px-3 py-1 text-sm text-gray-300 hover:text-white">Profile</Link></li>
-              <li><Link to="/change-password" className="px-3 py-1 text-sm text-gray-300 hover:text-white">Change Password</Link></li>
+              {/*<li><Link to="/change-password" className="px-3 py-1 text-sm text-gray-300 hover:text-white">Change Password</Link></li>*/}
               <li><Link to="/logout" className="px-3 py-1 text-sm text-gray-300 hover:text-white">Logout</Link></li>
             </ul>
           ) : (
@@ -98,7 +98,7 @@ export default function Navbar({ user }) {
               <ul className="flex flex-col">
                 <li className="py-1 text-sm font-medium text-white">{user.fullName}</li>
                 <li><Link to="/profile" onClick={() => setMenuOpen(false)} className="block py-2 text-sm text-gray-300">Profile</Link></li>
-                <li><Link to="/change-password" onClick={() => setMenuOpen(false)} className="block py-2 text-sm text-gray-300">Change Password</Link></li>
+                {/*<li><Link to="/change-password" onClick={() => setMenuOpen(false)} className="block py-2 text-sm text-gray-300">Change Password</Link></li>*/}
                 <li><Link to="/logout" onClick={() => setMenuOpen(false)} className="block py-2 text-sm text-gray-300">Logout</Link></li>
               </ul>
             ) : (

@@ -19,7 +19,7 @@ const mockWorkshops = [
 const FadeDivider = () => (
   <tr>
     <td colSpan={3} className="p-1">
-      <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)'}} />
+      <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)' }} />
     </td>
   </tr>
 );
@@ -44,13 +44,13 @@ export default function ViewProfile() {
   if (workshops.length > 0) {
     return (
       <div className="flex flex-col items-center mt-10 px-4 gap-8">
-        <div class="text-3xl font-bold">{profileRows[0][1]} {profileRows[1][1]}</div>
+        <div class="text-3xl font-bold text-gray-700">{profileRows[0][1]} {profileRows[1][1]}</div>
         {/* Profile info */}
         <div className="w-full max-w-xl bg-white rounded-lg shadow-lg overflow-hidden ">
           <div className="w-full max-w-xl bg-white rounded-lg shadow-sm overflow-hidden">
-  <h2 className="text-base font-semibold text-gray-700 px-5 py-3">User Details</h2>
-  <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)'}} />
-  </div>
+            <h2 className="text-base font-semibold text-gray-700 px-5 py-3">User Details</h2>
+            <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)' }} />
+          </div>
           <table className="w-full">
             <tbody>
               {profileRows.map(([label, value], i) => (
@@ -115,16 +115,16 @@ function EditProfileInline() {
             <tbody>
               {["Title", "First Name", "Last Name", "Phone Number", "Institute",
                 "Department", "Position", "Location", "State"].map((field, i, arr) => (
-                <>
-                  <tr key={field}>
-                    <td className="px-5 py-3">
-                      <label className="block text-sm text-gray-500 mb-1">{field}</label>
-                      <input type="text" className="w-full border border-gray-200 rounded px-3 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-400" />
-                    </td>
-                  </tr>
-                  {i < arr.length - 1 && <FadeDivider />}
-                </>
-              ))}
+                  <>
+                    <tr key={field}>
+                      <td className="px-5 py-3">
+                        <label className="block text-sm text-gray-500 mb-1">{field}</label>
+                        <input type="text" className="w-full border border-gray-200 rounded px-3 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+                      </td>
+                    </tr>
+                    {i < arr.length - 1 && <FadeDivider />}
+                  </>
+                ))}
             </tbody>
           </table>
           <div className="flex gap-3 px-5 py-4">
