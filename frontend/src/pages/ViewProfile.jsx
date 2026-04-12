@@ -1,14 +1,5 @@
 import { Link } from "react-router-dom";
 
-// Mirrors view_profile.html:
-// If profile complete (Workshops exist):
-//   Profile info table: First name | Last name | Email | Institute | Phone | Department | Location | Position
-//   Workshop Details table: Instructor Name | Workshop Date | Workshop Type
-//     — if no instructor assigned: "Pending" badge instead of name
-// If profile incomplete (no workshops yet):
-//   Inline edit form with fields: Title, First name, Last name, Phone, Institute, Department, Position, Location, State
-//   Update + Cancel buttons
-
 const mockProfile = {
   first_name: "Jane",
   last_name: "Doe",
@@ -25,54 +16,84 @@ const mockWorkshops = [
   { id: 2, instructor: null, date: "2025-09-10", workshop_type: "Scilab" },
 ];
 
+const FadeDivider = () => (
+  <tr>
+    <td colSpan={3} className="p-1">
+      <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)'}} />
+    </td>
+  </tr>
+);
+
 export default function ViewProfile() {
   const profile = mockProfile;
   const workshops = mockWorkshops;
 
-  // Profile is complete — show read-only view
+  const profileRows = [
+    ["First name", profile.first_name],
+    ["Last name", profile.last_name],
+    ["Email", profile.email],
+    ["Institute", profile.institute],
+    ["Phone Number", profile.phone_number],
+    ["Department", profile.department],
+    ["Location", profile.location],
+    ["Position", profile.position],
+  ];
+
+  const workshopHeaders = ["Instructor Name", "Workshop Date", "Workshop Type"];
+
   if (workshops.length > 0) {
     return (
-      <div className="page-container">
-
-        {/* Profile info table */}
-        <div className="table-wrapper">
-          <table className="table table--bordered">
+      <div className="flex flex-col items-center mt-10 px-4 gap-8">
+        <div class="text-3xl font-bold">{profileRows[0][1]} {profileRows[1][1]}</div>
+        {/* Profile info */}
+        <div className="w-full max-w-xl bg-white rounded-lg shadow-lg overflow-hidden ">
+          <div className="w-full max-w-xl bg-white rounded-lg shadow-sm overflow-hidden">
+  <h2 className="text-base font-semibold text-gray-700 px-5 py-3">User Details</h2>
+  <div className="h-px" style={{background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)'}} />
+  </div>
+          <table className="w-full">
             <tbody>
-              <tr><th>First name:</th><td>{profile.first_name}</td></tr>
-              <tr><th>Last name:</th><td>{profile.last_name}</td></tr>
-              <tr><th>Email:</th><td>{profile.email}</td></tr>
-              <tr><th>Institute:</th><td>{profile.institute}</td></tr>
-              <tr><th>Phone Number:</th><td>{profile.phone_number}</td></tr>
-              <tr><th>Department:</th><td>{profile.department}</td></tr>
-              <tr><th>Location:</th><td>{profile.location}</td></tr>
-              <tr><th>Position:</th><td>{profile.position}</td></tr>
+              {profileRows.map(([label, value], i) => (
+                <>
+                  <tr key={label}>
+                    <th className="text-left text-gray-500 font-medium px-5 py-3 w-1/3">{label}</th>
+                    <td className="text-gray-800 px-5 py-3">{value}</td>
+                  </tr>
+                  {i < profileRows.length - 1 && <FadeDivider />}
+                </>
+              ))}
             </tbody>
           </table>
         </div>
 
         {/* Workshop history */}
-        <h2 className="section-heading">Workshop Details</h2>
-        <div className="table-wrapper">
-          <table className="table table--bordered">
+        <div className="w-full max-w-xl bg-white rounded-lg shadow-lg overflow-hidden">
+          <h2 className="text-base font-semibold text-gray-700 px-5 py-3">Workshop Details</h2>
+          <div className="h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
+          <table className="w-full">
             <thead>
               <tr>
-                <th>Instructor Name</th>
-                <th>Workshop Date</th>
-                <th>Workshop Type</th>
+                {workshopHeaders.map((h) => (
+                  <th key={h} className="text-left text-gray-500 font-medium px-5 py-3">{h}</th>
+                ))}
               </tr>
             </thead>
             <tbody>
-              {workshops.map((w) => (
-                <tr key={w.id}>
-                  <td>
-                    {w.instructor
-                      ? w.instructor
-                      : <span className="badge badge--warning">Pending</span>
-                    }
-                  </td>
-                  <td>{w.date}</td>
-                  <td>{w.workshop_type}</td>
-                </tr>
+              {workshops.map((w, i) => (
+                <>
+                  <tr key={w.id}>
+                    <td className="px-5 py-3 text-gray-800">
+                      {w.instructor ?? (
+                        <span className="bg-yellow-100 text-yellow-700 text-xs font-medium px-2 py-0.5 rounded-full">
+                          Pending
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-5 py-3 text-gray-800">{w.date}</td>
+                    <td className="px-5 py-3 text-gray-800">{w.workshop_type}</td>
+                  </tr>
+                  {i < workshops.length - 1 && <FadeDivider />}
+                </>
               ))}
             </tbody>
           </table>
@@ -82,36 +103,33 @@ export default function ViewProfile() {
     );
   }
 
-  // Profile incomplete — show edit form
   return <EditProfileInline />;
 }
 
-// Inline edit form shown when profile not yet set up
 function EditProfileInline() {
   return (
-    <div className="page-container">
-      <div className="form-centered">
-        <form className="form">
-          <div className="table-wrapper">
-            <table className="table">
-              <tbody>
-                {["Title", "First Name", "Last Name", "Phone Number", "Institute",
-                  "Department", "Position", "Location", "State"].map((field) => (
+    <div className="flex flex-col items-center mt-10 px-4">
+      <div className="w-full max-w-xl bg-white rounded-lg shadow-sm overflow-hidden">
+        <form>
+          <table className="w-full">
+            <tbody>
+              {["Title", "First Name", "Last Name", "Phone Number", "Institute",
+                "Department", "Position", "Location", "State"].map((field, i, arr) => (
+                <>
                   <tr key={field}>
-                    <td>
-                      <div className="form-group">
-                        <label>{field}</label>
-                        <input type="text" className="form-input" />
-                      </div>
+                    <td className="px-5 py-3">
+                      <label className="block text-sm text-gray-500 mb-1">{field}</label>
+                      <input type="text" className="w-full border border-gray-200 rounded px-3 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-400" />
                     </td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="form-actions">
-            <button type="submit" className="btn btn--success">Update</button>
-            <Link to="/"><button type="button" className="btn btn--primary">Cancel</button></Link>
+                  {i < arr.length - 1 && <FadeDivider />}
+                </>
+              ))}
+            </tbody>
+          </table>
+          <div className="flex gap-3 px-5 py-4">
+            <button type="submit" className="bg-green-600 text-white text-sm px-4 py-1.5 rounded hover:bg-green-700">Update</button>
+            <Link to="/"><button type="button" className="bg-blue-600 text-white text-sm px-4 py-1.5 rounded hover:bg-blue-700">Cancel</button></Link>
           </div>
         </form>
       </div>
