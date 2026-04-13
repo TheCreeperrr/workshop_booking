@@ -11,6 +11,7 @@ import AddWorkshopType from "./pages/AddWorkshopType";
 import EditWorkshopType from "./pages/EditWorkshopType";
 import ProposeWorkshop from "./pages/ProposeWorkshop";
 import WorkshopDetails from "./pages/WorkshopDetails";
+import WorkshopStatistics from "./pages/WorkshopStatistics";
 import WorkshopStatusCoordinator from "./pages/WorkshopStatusCoordinator";
 import WorkshopStatusInstructor from "./pages/WorkshopStatusInstructor";
 import ViewProfile from "./pages/ViewProfile";
@@ -41,6 +42,7 @@ function App() {
           <Route path="/propose-workshop" element={<ProposeWorkshop />} />
           <Route path="/workshop/:id" element={<WorkshopDetails user={mockUser} />} />
           <Route path="/workshop-status" element={<WorkshopStatusCoordinator user={mockUser} />} />
+          <Route path="/statistics" element={<WorkshopStatistics />} />
           <Route path="/workshop-status/instructor" element={<WorkshopStatusInstructor user={mockUser} />} />
           <Route path="/profile" element={<ViewProfile />} />
           <Route path="/profile/edit" element={<EditProfile />} />
