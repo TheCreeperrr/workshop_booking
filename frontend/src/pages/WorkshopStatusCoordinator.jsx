@@ -5,6 +5,9 @@ const mockUser = { first_name: "Jane" };
 const mockWorkshops = [
   { id: 1, workshop_type: "Python", instructor: "Prof. Sharma", date: "2025-08-15", status: true, tnc_accepted: true, get_status: "Accepted" },
   { id: 2, workshop_type: "Scilab", instructor: "", date: "2025-09-01", status: false, tnc_accepted: true, get_status: "Pending" },
+  { id: 3, workshop_type: "C++", instructor: "Dr. Mehta", date: "2025-10-05", status: true, tnc_accepted: true, get_status: "Accepted" },
+  { id: 4, workshop_type: "Java", instructor: "", date: "2025-10-20", status: false, tnc_accepted: true, get_status: "Pending" },
+  { id: 5, workshop_type: "MATLAB", instructor: "Prof. Iyer", date: "2025-11-03", status: true, tnc_accepted: true, get_status: "Accepted" },
 ];
 
 const FadeDivider = ({ colSpan = 4 }) => (

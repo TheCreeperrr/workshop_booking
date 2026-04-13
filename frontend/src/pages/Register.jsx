@@ -1,12 +1,5 @@
 import { useState } from "react";
 
-// Mirrors register.html:
-// "Coordinator Registration Form" heading
-// Full table-style form with all fields
-// All fields full-width, stacked, labels above inputs
-// Required fields marked with * (red)
-// Register button at bottom
-
 export default function Register() {
   const [form, setForm] = useState({
     username: "",
@@ -17,83 +10,47 @@ export default function Register() {
     last_name: "",
   });
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
+  const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // TODO: connect to Django register endpoint
   };
 
+  const fields = [
+    { id: "username",    label: "Username",         type: "text" },
+    { id: "email",       label: "Email",            type: "email" },
+    { id: "first_name",  label: "First Name",       type: "text" },
+    { id: "last_name",   label: "Last Name",        type: "text" },
+    { id: "password1",   label: "Password",         type: "password" },
+    { id: "password2",   label: "Confirm Password", type: "password" },
+  ];
+
   return (
-    <div className="page-container">
-      <h3 className="page-heading">Coordinator Registration Form</h3>
+    <div className="flex flex-col items-center mt-10 px-4">
+      <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden">
 
-      <form className="form" onSubmit={handleSubmit}>
-        <table className="form-table">
-          <tbody>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="username" className="label--required">Username</label>
-                  <input id="username" name="username" type="text" className="form-input"
-                    value={form.username} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="email" className="label--required">Email</label>
-                  <input id="email" name="email" type="email" className="form-input"
-                    value={form.email} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="first_name" className="label--required">First Name</label>
-                  <input id="first_name" name="first_name" type="text" className="form-input"
-                    value={form.first_name} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="last_name" className="label--required">Last Name</label>
-                  <input id="last_name" name="last_name" type="text" className="form-input"
-                    value={form.last_name} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="password1" className="label--required">Password</label>
-                  <input id="password1" name="password1" type="password" className="form-input"
-                    value={form.password1} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <div className="form-group">
-                  <label htmlFor="password2" className="label--required">Confirm Password</label>
-                  <input id="password2" name="password2" type="password" className="form-input"
-                    value={form.password2} onChange={handleChange} />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <h2 className="text-base font-semibold text-gray-700 px-5 py-3 text-center">Coordinator Registration</h2>
+        <div className="h-px" style={{ background: 'linear-gradient(to right, transparent, #d1d5db 8%, #d1d5db 92%, transparent)' }} />
 
-        <button type="submit" className="btn btn--primary">
-          Register
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4 px-5 py-5">
+          {fields.map((f) => (
+            <div key={f.id} className="flex flex-col gap-1">
+              <label htmlFor={f.id} className="text-sm text-gray-500 font-medium">
+                {f.label} <span className="text-red-500">*</span>
+              </label>
+              <input id={f.id} name={f.id} type={f.type}
+                value={form[f.id]} onChange={handleChange}
+                className="w-full border border-gray-200 rounded px-3 py-1.5 text-sm text-gray-800 focus:outline-none focus:ring-1 focus:ring-blue-400" />
+            </div>
+          ))}
+
+          <button type="submit"
+            className="w-full py-1.5 px-4 rounded text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors mt-1">
+            Register
+          </button>
+        </form>
+
+      </div>
     </div>
   );
 }
